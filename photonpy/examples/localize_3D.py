@@ -36,7 +36,7 @@ def generate_storm_movie(psf:Estimator, xyzI, numframes=100,
         
         frames[f] = ctx.smlm.DrawROIs((imgsize,imgsize), rois, roipos[on_spots])
         frames[f] += bg
-        on_counts[f] = np.sum(on)
+        on_counts[f] = np.sum(on)   
 
     return frames, on_counts
 

@@ -67,23 +67,6 @@ class SpotDetector(ctypes.Structure):
 
 
 
-class GLRTSpotDetector:
-    sigma = 2
-    maxspots = 500
-    roisize = 10
-    fdr = 0.5
-    def __init__(self, sigma, roisize, fdr, maxspots=500):
-        self.sigma = sigma
-        self.roisize = roisize
-        self.fdr = fdr
-        self.maxspots = maxspots
-
-    def CreateNativeFactory(self, ctx):
-        m = SpotDetectionMethods(ctx)
-        return SpotDetectorNativeFactory(
-                m._GLRT_Configure(self.sigma,self.maxspots, self.fdr, self.roisize),
-                m._SpotDetector_DestroyFactory)
-
 
 class PSFCorrelationSpotDetector:
     def __init__(self, psfstack, bgimg, minPhotons, maxFilterSizeXY, bgFilterSize=12, debugMode=False, roisize=None):
@@ -146,15 +129,6 @@ class SpotDetectionMethods:
             ]
         self._PSFCorrelationSpotDetector_Configure.restype = ctypes.c_void_p
 
-#CDLL_EXPORT ISpotDetectorFactory* GRLT_Configure(float psfSigma, int maxSpots, float fdr, int roisize);
-
-        self._GLRT_Configure = lib.GLRT_Configure
-        self._GLRT_Configure.argtypes = [
-                ctypes.c_float,
-                ctypes.c_int,
-                ctypes.c_float,
-                ctypes.c_int]
-        self._GLRT_Configure.restype = ctypes.c_void_p
 
 #CDLL_EXPORT int SpotDetector_ProcessFrame(const float* frame, int width, int height,
 #	int maxSpots, float* spotScores, Int2* cornerPos, float* rois, const SpotDetector & cfg)
