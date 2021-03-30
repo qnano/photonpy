@@ -53,7 +53,7 @@ with Context(debugMode=False) as ctx:
 
     t0 = time.time()
     for f in range(len(mov)):
-        img_queue.PushFrame(mov[f])
+        img_queue.PushFrameU16(mov[f])
         
     while img_queue.NumFinishedFrames() < numframes:
         time.sleep(0.1)

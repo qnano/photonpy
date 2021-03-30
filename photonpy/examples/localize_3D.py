@@ -14,27 +14,6 @@ import time
 import tqdm
 import tifffile
 
-# Change this to your cubic spline PSF calibration file..
-def cspline_calib_fn():
-    # This is the CSpline PSF calibration generated from example data from
-    # "Real-time 3D single-molecule localization using experimental point spread functions"
-    cspline_fn = 'tetrapod-psf.zstack'
-    import os
-    if not os.path.exists(cspline_fn):
-        try:
-            import urllib.request
-            url=f'https://surfdrive.surf.nl/files/index.php/s/PgZ532YEvUaKqc6/download'
-            print(f"Downloading {url}")
-            urllib.request.urlretrieve(url, cspline_fn)
-            
-            if not os.path.exists(cspline_fn):
-                print('Skipping CSpline 3D PSF (no coefficient file found)')
-                cspline_fn = None
-        finally:
-            ...
-    
-    return cspline_fn
-
 
 
 def generate_storm_movie(psf:Estimator, xyzI, numframes=100, 
@@ -189,7 +168,7 @@ with Context(debugMode=False) as ctx:
         detection_threshold = 20
         emitter_intensity = 3000
     else:
-        fn = cspline_calib_fn()
+        fn = 'tetrapod-psf.zstack'
         roisize = 18
         psf = CSplineMethods(ctx).CreatePSFFromFile(roisize, fn)
         detection_threshold = 10

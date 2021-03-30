@@ -39,7 +39,7 @@ print(dstdir)
 
 setuptools.setup(
     name="photonpy",
-    version="1.0.36",
+    version="1.0.37",
     author="Jelmer Cnossen",
     author_email="j.p.cnossen@tudelft.nl",
     description="CUDA-Based image processing for single molecule localization microscopy",

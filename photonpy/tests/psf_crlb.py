@@ -42,11 +42,6 @@ def estimate_precision(psf:Estimator, estimate_fn, thetas, photons):
 
         estim,diag,traces = estimate_fn(smp,roipos=roipos)
             
-        if i == len(photons)-1:
-            plot_traces(traces[:20], thetas_[:20], psf, axis=0)
-            plot_traces(traces[:20], thetas_[:20], psf, axis=2)
-            plot_traces(traces[:20], thetas_[:20], psf, axis=Iidx)
-
         crlb_ = psf.CRLB(thetas_,roipos=roipos)
         err = estim-thetas_
         prec[i] = np.std(err,0)
@@ -129,43 +124,25 @@ with Context(debugMode=False) as ctx:
         
     photons = np.logspace(2, 5, 20)
     
-    def sf_estimate_lm(lm):
-        def f(smp, roipos):
-            sf_psf.SetLevMarParams(lm,iterations=200)
-            return sf_psf.Estimate(smp, roipos)
-        return f
-    
     data = [
         (g_psf, "2D Gaussian", estimate_precision(g_psf, g_psf.Estimate, theta, photons)),
-        #(g_z_psf, 'Astig Gaussian',estimate_precision(g_z_psf, g_z_psf, theta_as, photons)),
-        
-        #(g_psf, "2D Gaussian with readnoise", estimate_precision(g_psf_noisy,g_psf_noisy, theta, photons)),
-        #(com_psf, "Center of mass", estimate_precision(g_psf, com_psf, theta, photons)),
-        #(g_psf, "Non-readnoise fit on readnoise sample", estimate_precision(g_psf_noisy, g_psf, theta, photons)),
-        #(g_s_psf, '2D Gauss Sigma', estimate_precision(g_s_psf, g_s_psf, theta_sig[:,:5], photons)),
-        #(g_sxy_psf, '2D Gauss Sigma XY', estimate_precision(g_sxy_psf,g_sxy_psf, theta_sig, photons)),
-         ]
-    
-    if False:
-        for lm in [1e-20,1e-19,3e-18, 1e-18,1e-17, 1e-16,1e-15,-1]:
-            data.append(
-                (sf_psf, f"SIMFLUX LM={lm}", estimate_precision(sf_psf, sf_estimate_lm(lm), sf_theta, photons)),
-            )
+        (g_z_psf, 'Astig Gaussian',estimate_precision(g_z_psf, g_z_psf.Estimate, theta_as, photons))
+            ]
     
     cspline_fn = cspline_calib_fn()
     if cspline_fn is not None:
         print('CSpline 3D PSF:')
         cs_calib = CSplineCalibration.from_file_nmeth(cspline_fn)
-        cs_psf = CSplineMethods(ctx).CreatePSF_XYZIBg(roisize, cs_calib, True)
+        cs_psf = CSplineMethods(ctx).CreatePSF_XYZIBg(roisize, cs_calib, CSplineMethods.FlatBg)
         cs_psf.SetLevMarParams(1e-18, 50)
         
         theta_cs = theta_as*1
         theta_cs[:,2] = np.linspace(-0.05,0.05, numspots)
        
-        #data.append((cs_psf, "Cubic spline PSF", estimate_precision(cs_psf, cs_psf, theta_cs, photons)))
+        data.append((cs_psf, "Cubic spline PSF", estimate_precision(cs_psf, cs_psf.Estimate, theta_cs, photons)))
         
 
-    axes=['x', 'I', 'bg']
+    axes=['x']
     axes_unit=['pixels', 'photons','photons/pixel']
     axes_scale=[1, 1, 1, 1]
     for i,ax in enumerate(axes):

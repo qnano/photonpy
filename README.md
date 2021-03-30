@@ -30,9 +30,6 @@ Step 8.
 You should be able to run photonpy/examples/localize_spots.py now
 
 
-
-
-
-Possible debugs should above steps not lead to the desired result:
-- Update GPU driver: search for 'device manager', go to 'Display adapters', right click your video card (usually NVIDIA XXXX), click properties -> Driver -> Update Driver..., you will probably have to reboot.
+Possible fixes should above steps not lead to the desired result:
 - Change CUDA setting: search for NSight Monitor, run as admin. It will probably not open a new window but show up as background process hid under the arrow at the bottomright part of your screen. Rightclick icon and go to 'Options'. Change 'WDDM TDR Delay' to '180' and 'WDDM TDR Enabled' to 'False'. You will probably have to reboot. 
+- Update GPU driver: search for 'device manager', go to 'Display adapters', right click your video card (usually NVIDIA XXXX), click properties -> Driver -> Update Driver..., you will probably have to reboot.
