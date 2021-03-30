@@ -1,0 +1,36 @@
+
+BUILDING
+----------------------------------------------------------------------------
+
+(The order is important here)
+- Install Visual studio 2019 Community Edition: https://visualstudio.microsoft.com/downloads/
+- Open visual studio. Menu "Tools / Get Tools and Features"
+- Install CUDA Toolkit 10.1 update 2 https://developer.nvidia.com/cuda-downloads
+	(This needs to be done after visual studio install, so CUDA is registered into Visual Studio)
+
+- Download the external libraries below and extract in the root. There should be a folder "external" in the repository "cpp" directory.
+https://drive.google.com/open?id=1oxSLoHR8M3uQBY4fJOGxqndHeFw6MkS0
+
+- In visual studio, open the smlm.sln. 
+- Set the build to release mode, and build SMLMLibTest. This will also build the main library (SMLMLib)
+- The final dll is photonpy.dll, which will be in x64/Release or x64/Debug
+
+
+- Download python 64 bit and install. Make sure to add python to the PATH during installation
+- Open command line
+- Run python setup.py develop
+
+
+
+
+------------------------------------------------------
+
+PIP package:
+https://dzone.com/articles/executable-package-pip-install
+python setup.py bdist_wheel
+
+Dev mode:
+python setup.py develop --uninstall
+
+
+

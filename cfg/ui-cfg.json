@@ -1,0 +1,23 @@
+{
+    "detectionThreshold": 3.0,
+    "startFrame": 0,
+    "pitch1": 219.4767,
+    "pitch0": 219.8453,
+    "roisize": 9,
+    "txtROIFile": "C:/data/80nm/80nm-3rdshift-2_0.rois",
+    "fixDepth": 0.9,
+    "gain": 2.2,
+    "tiffPath": "C:/data/80nm/80nm-3rdshift-2_0.tif",
+    "numPhaseSteps": 3,
+    "psfSigma": 1.83,
+    "smlmLocsFile": "C:/data/80nm/80nm-3rdshift-2_0.hdf5",
+    "minpitch": 3.3,
+    "maxpitch": 3.5,
+    "pixelsize": 65.0,
+    "txtCameraOffsetFile": "C:/data/GainImages/1bg_1_MMStack_Pos0.ome.tif",
+    "angle1": 0.0542,
+    "maxLinkFrameskip": 2,
+    "offset": 100.0,
+    "angle0": 90.0689,
+    "maxLinkDistance": 0.3
+}

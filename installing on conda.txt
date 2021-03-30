@@ -1,0 +1,4 @@
+conda create -n simflux_env python=3.6 anaconda
+conda activate simflux_env
+conda install tensorflow-gpu scikit-learn tqdm matplotlib scikit-image pyyaml
+pip install tifffile

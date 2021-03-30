@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E62A6F28-58B6-4089-B46D-748590AD096F}</ProjectGuid>
+    <RootNamespace>libSMLM</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SMLMLib</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.1.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>photonpy</TargetName>
+    <OutDir>$(SolutionDir)\photonpy\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>photonpy</TargetName>
+    <OutDir>$(SolutionDir)\photonpy\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>SMLM_EXPORTS;WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir);$(ProjectDir)..\external\cub-1.8.0;$(ProjectDir)/../external/libtiff-4.0.7/include</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart.lib;cufft.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)/../external/libtiff-4.0.7/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
+copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <AdditionalOptions>--expt-extended-lambda --expt-relaxed-constexpr %(AdditionalOptions)</AdditionalOptions>
+      <Include>
+      </Include>
+      <CodeGeneration>compute_60,sm_60</CodeGeneration>
+      <AdditionalCompilerOptions>/bigobj</AdditionalCompilerOptions>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>SMLM_EXPORTS;WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir);$(ProjectDir)/../external/cub-1.8.0;$(ProjectDir)/../external/libtiff-4.0.7/include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cufft.lib; cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)/../external/libtiff-4.0.7/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>cudart64_101.dll;cufft64_10.dll</DelayLoadDLLs>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
+copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <AdditionalOptions>--expt-extended-lambda --expt-relaxed-constexpr --default-stream per-thread %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalCompilerOptions>/MP</AdditionalCompilerOptions>
+      <CodeGeneration>compute_30,sm_30;compute_60,sm_60</CodeGeneration>
+    </CudaCompile>
+    <CudaLink>
+      <Optimization>O3</Optimization>
+    </CudaLink>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Estimators\EstimationQueue.cpp" />
+    <ClCompile Include="Estimators\Estimator.cpp" />
+    <ClCompile Include="FFT.cpp" />
+    <ClCompile Include="ImageProcessor.cpp" />
+    <ClCompile Include="MedianFilterQueue.cu" />
+    <ClCompile Include="LinkLocalizations.cpp" />
+    <ClCompile Include="Rendering.cpp" />
+    <CudaCompile Include="CudaUtils.cu" />
+    <CudaCompile Include="Estimators\CSpline\CubicSplinePSF.cu" />
+    <CudaCompile Include="Estimators\EstimatorImpl.cu" />
+    <CudaCompile Include="Estimators\Gaussian\GaussianPSF.cu" />
+    <CudaCompile Include="Estimators\GLRT_PSF.cu" />
+    <CudaCompile Include="Estimators\SIMFLUX\SIMFLUX_PSF_CombinedFrame.cu" />
+    <CudaCompile Include="Estimators\SIMFLUX\SIMFLUX_PSF.cu" />
+    <CudaCompile Include="ContinuousFRC.cu" />
+    <CudaCompile Include="ImgFilterQueue.cu" />
+    <CudaCompile Include="simflux\SIMFLUX.cu" />
+    <CudaCompile Include="SpotDetection\PSFCorrelationSpotDetector.cu" />
+    <CudaCompile Include="SpotDetection\SpotDetector.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DebugImageCallback.cpp" />
+    <CudaCompile Include="CameraCalibration.cu">
+      <FileType>CppCode</FileType>
+    </CudaCompile>
+    <CudaCompile Include="DriftEstimation.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <ClCompile Include="Context.cpp" />
+    <ClCompile Include="ROIQueue.cpp" />
+    <ClCompile Include="StringUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CameraCalibration.h" />
+    <ClInclude Include="Context.h" />
+    <ClInclude Include="CudaIndexers.h" />
+    <ClInclude Include="DebugImageCallback.h" />
+    <ClInclude Include="Estimators\CSpline\CubicSplinePSF.h" />
+    <ClInclude Include="Estimators\CSpline\CubicSplinePSFModels.h" />
+    <ClInclude Include="Estimators\Estimation.h" />
+    <ClInclude Include="Estimators\EstimationQueue.h" />
+    <ClInclude Include="Estimators\Estimator.h" />
+    <ClInclude Include="Estimators\EstimatorImpl.h" />
+    <ClInclude Include="Estimators\Gaussian\GaussianPSF.h" />
+    <ClInclude Include="Estimators\Gaussian\GaussianPSFModels.h" />
+    <ClInclude Include="Estimators\SIMFLUX\SIMFLUX_PSF.h" />
+    <ClInclude Include="FFT.h" />
+    <ClInclude Include="GetPreciseTime.h" />
+    <ClInclude Include="HMM.h" />
+    <ClInclude Include="ImageFilters.h" />
+    <ClInclude Include="ContainerUtils.h" />
+    <ClInclude Include="CudaUtils.h" />
+    <ClInclude Include="DLLMacros.h" />
+    <ClInclude Include="ImageProcessor.h" />
+    <ClInclude Include="ImgFilterQueueImpl.h" />
+    <ClInclude Include="KahanSum.h" />
+    <ClInclude Include="KDTree.h" />
+    <ClInclude Include="MemLeakDebug.h" />
+    <ClInclude Include="DriftEstimation.h" />
+    <ClInclude Include="ImgFilterQueue.h" />
+    <ClInclude Include="QuadraticFit.h" />
+    <ClInclude Include="RandomDistributions.h" />
+    <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="palala.h" />
+    <ClInclude Include="Rendering.h" />
+    <ClInclude Include="ROIQueue.h" />
+    <ClInclude Include="simflux\ExcitationModel.h" />
+    <ClInclude Include="simflux\SIMFLUX.h" />
+    <ClInclude Include="simflux\SIMFLUX_Models.h" />
+    <ClInclude Include="SolveMatrix.h" />
+    <ClInclude Include="SpotDetection\PSFCorrelationSpotDetector.h" />
+    <ClInclude Include="SpotDetection\SpotDetector.h" />
+    <ClInclude Include="SpotDetection\SpotIndexListGenerator.h" />
+    <ClInclude Include="StringUtils.h" />
+    <ClInclude Include="ThreadUtils.h" />
+    <ClInclude Include="Vector.h" />
+    <ClInclude Include="Zernike.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.1.targets" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+  </Target>
+</Project>

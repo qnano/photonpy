@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SMLMLib", "cpp\SMLMLib\SMLMLib.vcxproj", "{E62A6F28-58B6-4089-B46D-748590AD096F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SMLMLibPythonTest", "cpp\SMLMLibPythonTest\SMLMLibPythonTest.vcxproj", "{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Debug|x64.ActiveCfg = Debug|x64
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Debug|x64.Build.0 = Debug|x64
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Debug|x86.ActiveCfg = Debug|x64
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Release|Any CPU.ActiveCfg = Release|x64
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Release|x64.ActiveCfg = Release|x64
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Release|x64.Build.0 = Release|x64
+		{E62A6F28-58B6-4089-B46D-748590AD096F}.Release|x86.ActiveCfg = Release|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Debug|x64.ActiveCfg = Debug|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Debug|x64.Build.0 = Debug|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Debug|x86.ActiveCfg = Debug|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Release|Any CPU.ActiveCfg = Release|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Release|x64.ActiveCfg = Release|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Release|x64.Build.0 = Release|x64
+		{A9C272CA-F359-4D46-96EF-B3FFE94BE9AF}.Release|x86.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F24791B-ABE1-4132-A08D-06E9C20F2067}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="CameraCalibration.cu">
+      <Filter>SMLMUtils</Filter>
+    </CudaCompile>
+    <CudaCompile Include="SpotDetection\SpotDetector.cu">
+      <Filter>SpotDetection</Filter>
+    </CudaCompile>
+    <CudaCompile Include="CudaUtils.cu">
+      <Filter>Utils</Filter>
+    </CudaCompile>
+    <CudaCompile Include="simflux\SIMFLUX.cu">
+      <Filter>SIMFLUX</Filter>
+    </CudaCompile>
+    <CudaCompile Include="ImgFilterQueue.cu">
+      <Filter>Queue</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Estimators\EstimatorImpl.cu">
+      <Filter>Estimators</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Estimators\GLRT_PSF.cu">
+      <Filter>Estimators</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Estimators\CSpline\CubicSplinePSF.cu">
+      <Filter>Estimators\CSpline</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Estimators\Gaussian\GaussianPSF.cu">
+      <Filter>Estimators\Gaussian</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Estimators\SIMFLUX\SIMFLUX_PSF.cu">
+      <Filter>Estimators\SIMFLUX</Filter>
+    </CudaCompile>
+    <CudaCompile Include="SpotDetection\PSFCorrelationSpotDetector.cu">
+      <Filter>SpotDetection</Filter>
+    </CudaCompile>
+    <CudaCompile Include="DriftEstimation.cu">
+      <Filter>PostProcessing</Filter>
+    </CudaCompile>
+    <CudaCompile Include="ContinuousFRC.cu">
+      <Filter>PostProcessing</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Estimators\SIMFLUX\SIMFLUX_PSF_CombinedFrame.cu">
+      <Filter>Estimators\SIMFLUX</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DebugImageCallback.cpp">
+      <Filter>SMLMUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="StringUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FFT.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering.cpp">
+      <Filter>SMLMUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkLocalizations.cpp">
+      <Filter>SMLMUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageProcessor.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="Estimators\Estimator.cpp">
+      <Filter>Estimators</Filter>
+    </ClCompile>
+    <ClCompile Include="Estimators\EstimationQueue.cpp">
+      <Filter>Estimators</Filter>
+    </ClCompile>
+    <ClCompile Include="ROIQueue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="MedianFilterQueue.cu">
+      <Filter>Queue</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HMM.h" />
+    <ClInclude Include="CameraCalibration.h">
+      <Filter>SMLMUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CudaUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugImageCallback.h">
+      <Filter>SMLMUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DLLMacros.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="palala.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomDistributions.h">
+      <Filter>SMLMUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="SolveMatrix.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="StringUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Zernike.h">
+      <Filter>SMLMUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="FFT.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GetPreciseTime.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadraticFit.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriftEstimation.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotDetection\SpotDetector.h">
+      <Filter>SpotDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageFilters.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MemLeakDebug.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="simflux\SIMFLUX.h">
+      <Filter>SIMFLUX</Filter>
+    </ClInclude>
+    <ClInclude Include="simflux\SIMFLUX_Models.h">
+      <Filter>SIMFLUX</Filter>
+    </ClInclude>
+    <ClInclude Include="simflux\ExcitationModel.h">
+      <Filter>SIMFLUX</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgFilterQueue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgFilterQueueImpl.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering.h">
+      <Filter>SMLMUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageProcessor.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotDetection\SpotIndexListGenerator.h">
+      <Filter>SpotDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\Estimation.h">
+      <Filter>Estimators</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\Estimator.h">
+      <Filter>Estimators</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\EstimationQueue.h">
+      <Filter>Estimators</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\EstimatorImpl.h">
+      <Filter>Estimators</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\CSpline\CubicSplinePSF.h">
+      <Filter>Estimators\CSpline</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\CSpline\CubicSplinePSFModels.h">
+      <Filter>Estimators\CSpline</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\Gaussian\GaussianPSF.h">
+      <Filter>Estimators\Gaussian</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\Gaussian\GaussianPSFModels.h">
+      <Filter>Estimators\Gaussian</Filter>
+    </ClInclude>
+    <ClInclude Include="Estimators\SIMFLUX\SIMFLUX_PSF.h">
+      <Filter>Estimators\SIMFLUX</Filter>
+    </ClInclude>
+    <ClInclude Include="ROIQueue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="CudaIndexers.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotDetection\PSFCorrelationSpotDetector.h">
+      <Filter>SpotDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="KDTree.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="KahanSum.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{7c356b12-5ce1-4d0a-a852-a39bb062f0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SMLMUtils">
+      <UniqueIdentifier>{fce2e9c2-5d94-47c5-8d3a-f18da49b1444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Queue">
+      <UniqueIdentifier>{140704ab-5f56-450b-a2a1-7dd8ef214b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PostProcessing">
+      <UniqueIdentifier>{0801061b-f522-4f1d-aa4c-01e07db91126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpotDetection">
+      <UniqueIdentifier>{db7fc8e9-6ce3-4a1c-820e-91f98e86095d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SIMFLUX">
+      <UniqueIdentifier>{2986d952-5ebb-46d6-8a9e-0531b3934b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Estimators">
+      <UniqueIdentifier>{32ad9b44-904e-4223-809b-0938e0227fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Estimators\CSpline">
+      <UniqueIdentifier>{048ce848-184c-4ace-a1f9-e055a6fe0378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Estimators\SIMFLUX">
+      <UniqueIdentifier>{43984179-92d2-4445-a2a3-5db378fb0815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Estimators\Gaussian">
+      <UniqueIdentifier>{482ce83b-9693-4658-8368-ce7bb62fedc9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+</Project>
