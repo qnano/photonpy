@@ -10,7 +10,6 @@ import copy
 from .estimator import Estimator
 from .lib import NullableFloatArrayType
 
-from photonpy.smlm.picasso_hdf5 import save as save_hdf5
 
 class EstimQueue_Results:
     def __init__(self, param_names, sampleshape, estim, diag, crlb, 

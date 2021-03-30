@@ -2,24 +2,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
-from photonpy.cpp.context import Context
-import photonpy.cpp.gaussian as gaussian
-import photonpy.cpp.cspline as cspline
+from photonpy import Context, Estimator, EstimQueue, GaussianPSFMethods,Gauss3D_Calibration
+from photonpy import CSplineMethods, CSplineCalibration
 
-from photonpy.cpp.estimator import Estimator
-from photonpy.cpp.estim_queue import EstimQueue
-
-import photonpy.cpp.glrt as glrt
 import photonpy.cpp.com as com
 import photonpy.cpp.phasor as phasor
+import photonpy.cpp.glrt as glrt
 
 from photonpy.cpp.simflux import SIMFLUX
 
-from photonpy.cpp.calib import sCMOS_Calib
-
 import os
 
-as_calib = gaussian.Gauss3D_Calibration()
+as_calib = Gauss3D_Calibration()
 
 sf_mod = np.array([
      [0, 1.8, 0, 0.95, 0, 1/6],
@@ -78,14 +72,15 @@ def test_psf_speed(ctx: Context, smp_psf:Estimator, est_psf:Estimator,
     total = 0
     for i in range(repeats):
         queue.Schedule(repd, initial=initial)
-        results = queue.GetResults()
+        if queue.GetResultCount() > 0:
+            results = queue.GetResults()
         total += n
         
     queue.Flush()
     while not queue.IsIdle():
         time.sleep(0.05)
 
-    results = queue.GetResults(getSampleData=True)
+    results = queue.GetResults(getSampleData=False)
 #    print(results.CRLB())
     t1 = time.time()
     
@@ -97,23 +92,22 @@ def test_psf_speed(ctx: Context, smp_psf:Estimator, est_psf:Estimator,
 with Context(debugMode=False) as ctx:
     sigma=1.5
     w = 512
-    roisize=16
+    roisize=11
     theta=[[roisize//2, roisize//2, 1000, 5]]
-    g_api = gaussian.Gaussian(ctx)
+    g_api = GaussianPSFMethods(ctx)
     sf_api = SIMFLUX(ctx)
     psf = g_api.CreatePSF_XYIBg(roisize, sigma, True)
     #scmos = sCMOS_Calib(ctx, np.zeros((w,w)), np.ones((w,w)), np.ones((w,w))*5)
     #psf_sc = g_api.CreatePSF_XYIBg(roisize, sigma, True, scmos)
             
-    print('Phasor:')
-    phasor_est= phasor.CreateEstimator(roisize, ctx)
-    test_psf_speed(ctx,psf,phasor_est,theta, repeats=100,batchSize=10*1024)
-
     print('COM:')
     com_est = com.CreateEstimator(roisize, ctx)
     test_psf_speed(ctx,psf,com_est,theta, batchSize=10*1024, repeats=100)
+
+    print('Phasor:')
+    phasor_est= phasor.CreateEstimator(roisize, ctx)
+    test_psf_speed(ctx,psf,phasor_est,theta, repeats=100,batchSize=10*1024)
     
-#    test_queue_output(ctx, psf, theta)
     print('2D Gaussian fit:')
     test_psf_speed(ctx,psf,psf,theta,repeats=100)
 
@@ -153,8 +147,8 @@ with Context(debugMode=False) as ctx:
 
     if cspline_fn is not None:
         print('CSpline 3D PSF:')
-        calib = cspline.CSpline_Calibration.from_file_nmeth(cspline_fn)
-        cs_psf = cspline.CSpline(ctx).CreatePSF_XYZIBg(roisize, calib, True)
+        calib = CSplineCalibration.from_file_nmeth(cspline_fn)
+        cs_psf = CSplineMethods(ctx).CreatePSF_XYZIBg(roisize, calib, fitMode=CSplineMethods.FlatBg)
         cs_theta=[[roisize//2, roisize//2, 0, 1000, 5]]
         test_psf_speed(ctx,cs_psf,cs_psf, cs_theta,repeats=10)
 

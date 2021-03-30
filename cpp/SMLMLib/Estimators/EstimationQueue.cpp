@@ -165,7 +165,7 @@ int EstimationQueue::GetResults(int count, float * estim, float * diag,
 			for (int i = 0; i < psf->DiagSize() * b->numspots; i++)
 				diag[copied * psf->DiagSize() + i] = b->diagnostics[i];
 		}
-		if (samples) {
+		if (samples && keepSamples) {
 			for (int i = 0; i < psf->SampleCount() * b->numspots; i++)
 				samples[copied * psf->SampleCount() + i] = b->samples[i];
 		}
