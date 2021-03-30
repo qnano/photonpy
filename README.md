@@ -4,16 +4,15 @@ README
 Photonpy is a Python-wrapped C++/CUDA library for processing SMLM (single molecule localization microscopy data). 
 It currently only runs on Windows 64-bit with CUDA, but I'm working on making the CUDA optional. Help with porting to GCC/linux is appreciated.
 
-Features include:    
-    - Super fast spot detection and extraction on tiff files (~1k frames/s on my dell xps laptop)
-    - Max-Likelihood fitting of various 2D Gaussian models
-        (XY with or without fixed sigma, 3D using astigmatism)
-    - SIMFLUX (https://www.nature.com/articles/s41592-019-0657-7)
-    - Easy rendering of results: Piccaso Render compatible HDF5 import/export (https://github.com/jungmannlab/picasso)
-    - Phasor-based SMLM (https://aip.scitation.org/doi/full/10.1063/1.5005899)
-    - A C++ templated approach to quickly implement new PSF models as long as the first derivative can be computed.
-    - Drift correction in 2D and 3D
-    - Localization using cubic spline PSFs from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6009849/
+Features include:
+* Super fast spot detection and extraction on tiff files (~1k frames/s on my dell xps laptop)
+* Max-Likelihood fitting of various 2D Gaussian models (XY with or without fixed sigma, 3D using astigmatism), Center-Of-Mass and [Phasor-based SMLM](https://aip.scitation.org/doi/full/10.1063/1.5005899)
+  * Optimized CUDA code results in > 1M localizations/s on any reasonable CUDA card, on typical [2D Gaussian MLE](https://www.nature.com/articles/nmeth.1449)
+* [SIMFLUX](https://www.nature.com/articles/s41592-019-0657-7)
+* Easy rendering of results: [Piccaso Render](https://github.com/jungmannlab/picasso) compatible HDF5 import/export
+* A C++ templated approach to quickly implement new PSF models as long as the first derivative can be computed.
+* Drift correction in 2D and 3D
+* 3D Localization using [cubic spline PSFs](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6009849/)
 
 Currently compiled for CUDA 10.1 update 2 / Windows x64 using Visual Studio 2019
 
