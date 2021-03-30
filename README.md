@@ -1,32 +1,46 @@
 README
 ----------------------------------------------------------------------------
 
-Step 1. Download and install Anaconda for Windows 64 bit
-https://www.anaconda.com/distribution/
-https://repo.anaconda.com/archive/Anaconda3-2018.12-Windows-x86_64.exe
+** Installing as a user
 
-Step 2: Install Visual studio 2019 Community Edition: https://visualstudio.microsoft.com/downloads/
+Step 1. 
+Install python. Anaconda is recommended: https://www.anaconda.com/distribution/
 
-Step 3. Install CUDA Toolkit 10.1 update 2. We had some problems running the build from 10.2 on some PCs.
-https://developer.nvidia.com/cuda-10.1-download-archive-update2
-The toolkit needs to be installed after installing Visual Studio
+Step 2.
+Create a virtual environment, such as an anaconda environment:
 
-Step 4. Extract the external libraries (cpp/external.zip) so cpp contains a folder called "external"
-
-Step 5. In visual studio, open the smlm.sln, set the build to release mode, and build SMLMLib. 
-
-Step 6.
-Create a virtual environment in anaconda:
-You should have an "Anaconda Prompt" somewhere in the windows apps now.
-Open this anaconda prompt and run the following to create an anaconda environment named myenv:
 conda create -n myenv anaconda python=3.8
 conda activate myenv
 
-Step 7.
-Open this directory and install the photonpy python package in developer mode:
+Step 3.
+Install photonpy:
+
+pip install photonpy
+
+Step 4. 
+Install CUDA Toolkit 10.1 update 2. We had some problems running the build from 10.2 on some PCs.
+https://developer.nvidia.com/cuda-10.1-download-archive-update2
+
+Step 5.
+You should now be able to run some examples:
+python -m photonpy.examples.localize_spots.py
+
+
+** Installing as developer / Building from source
+
+Perform step 1 + 2 listed above.
+
+Step 3. Install Visual studio 2019 Community Edition: https://visualstudio.microsoft.com/downloads/
+
+Step 4. Extract the external libraries (cpp/external.zip) so cpp contains a folder called "external"
+
+Step 5. In visual studio, open the smlm.sln, set the build to release mode and x64 platform, and build SMLMLib. 
+
+Step 6.
+Open this directory and install the photonpy python package in developer mode (this way your python environment knows photonpy is located in the path you installed it in)
 python setup.py develop
 
-Step 8.
+Step 7.
 You should be able to run photonpy/examples/localize_spots.py now
 
 
