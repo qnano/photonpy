@@ -1,7 +1,11 @@
 README
 ----------------------------------------------------------------------------
 
-** Installing as a user
+Photonpy is a Python-wrapped C++/CUDA library for processing SMLM (single molecule localization microscopy data). 
+It currently only runs on Windows 64-bit with CUDA, but I'm working on making the CUDA optional. Help with porting to GCC/linux is appreciated.
+
+Installing as a user
+----------------------------------------------------------------------------
 
 Step 1. 
 Install python. Anaconda is recommended: https://www.anaconda.com/distribution/
@@ -26,8 +30,8 @@ You should now be able to run some examples:
 python -m photonpy.examples.localize_spots.py
 
 
-** Installing as developer / Building from source
-
+Installing as developer / Building from source
+----------------------------------------------------------------------------
 Perform step 1 + 2 listed above.
 
 Step 3. Install Visual studio 2019 Community Edition: https://visualstudio.microsoft.com/downloads/
