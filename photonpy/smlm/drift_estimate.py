@@ -274,7 +274,7 @@ def minEntropy(positions, framenum, crlb, framesperbin, imgshape,
                 cuda=useCuda, progcb=update_pbar)
                 
         if estimatePrecision:
-            print("\nComputing drift estimation precision... (Splitting axis={splitAxis})",flush=True)
+            print(f"\nComputing drift estimation precision... (Splitting axis={splitAxis})",flush=True)
             with tqdm.tqdm() as pbar:
                 def update_pbar(i,info): 
                     pbar.set_description(info.decode("utf-8"));pbar.update(1)
