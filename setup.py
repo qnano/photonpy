@@ -20,7 +20,7 @@ Features include:
     - Drift correction in 2D and 3D
     - Localization using cubic spline PSFs from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6009849/
 
-Currently compiled for CUDA 10.1 update 2 / Windows x64 using Visual Studio 2019
+Currently compiled for CUDA 11.2 for Windows 10
 
 Credits to Willem Melching (@pd0wm) for general debugging and implementation of astigmatic Gaussian PSF models, as well as yet unpublished code.
 
@@ -39,7 +39,7 @@ print(dstdir)
 
 setuptools.setup(
     name="photonpy",
-    version="1.0.37",
+    version="1.0.38",
     author="Jelmer Cnossen",
     author_email="j.p.cnossen@tudelft.nl",
     description="CUDA-Based image processing for single molecule localization microscopy",
@@ -50,7 +50,7 @@ setuptools.setup(
     #package_data={'smlmlib':['x64/Release/photonpy.dll'] },
 	data_files=[('lib/site-packages/photonpy/x64/Release', 
               ['photonpy/x64/Release/photonpy.dll', 
-		'photonpy/x64/Release/cudart64_101.dll',
+		'photonpy/x64/Release/cudart64_110.dll',
 		'photonpy/x64/Release/vcruntime140.dll',
 		'photonpy/x64/Release/vcruntime140_1.dll'
 		])],
@@ -68,6 +68,7 @@ setuptools.setup(
 		'tifffile',
         'h5py',
 		'pyyaml',
-        'scikit-image'
+        'scikit-image',
+        'pyqtgraph'
 	]#,    distclass=BinaryDistribution
 )

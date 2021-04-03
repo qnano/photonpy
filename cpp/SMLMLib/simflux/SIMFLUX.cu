@@ -8,7 +8,7 @@
 
 #include "Estimators/Estimation.h"
 #include "StringUtils.h"
-
+#include "ThreadUtils.h"
 #include "ExcitationModel.h"
 
 #pragma warning(disable : 4503) // decorated name length exceeded, name was truncated
@@ -28,7 +28,7 @@ CDLL_EXPORT void SIMFLUX_ProjectPointData(const Vector3f *xyI, int numpts, int p
 	float scale, int numProjAngles, const float *projectionAngles, float* output, float* shifts)
 {
 	int pw = projectionWidth;
-	parallel_for_cpu(numProjAngles, [&](int p) {
+	ParallelFor(numProjAngles, [&](int p) {
 		float* proj = &output[pw*p];
 		for (int i = 0; i < pw; i++)
 			proj[i] = 0.0f;

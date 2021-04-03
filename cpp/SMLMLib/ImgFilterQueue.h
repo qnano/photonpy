@@ -157,7 +157,8 @@ public:
 template<typename TFrame>
 class CopyToHostQueue : public ImgQueue<TFrame, HostMemoryFrame> {
 public:
-	CopyToHostQueue(int2 imgsize, Context*ctx) : ImgQueue(imgsize, ctx) {
+	typedef ImgQueue<TFrame, HostMemoryFrame> base;
+	CopyToHostQueue(int2 imgsize, Context*ctx) : base(imgsize, ctx) {
 		ThrowIfCUDAError(cudaStreamCreate(&stream2));
 	}
 	~CopyToHostQueue() {

@@ -13,6 +13,7 @@ template<typename TModel>
 class cuCSplinePSF : public cuPSFImpl<TModel, CSpline_Calibration>
 {
 public:
+	typedef cuPSFImpl<TModel, CSpline_Calibration> base;
 	DeviceArray<float> splineCoefs;
 	CSpline_Calibration calib;
 
@@ -22,7 +23,7 @@ public:
 	}
 
 	cuCSplinePSF(Int2 roisize, const CSpline_Calibration& c, std::vector<ParamLimit> limits, int numconst) :
-		cuPSFImpl(roisize, limits, numconst), 
+		base(roisize, limits, numconst), 
 		calib(c), 
 		splineCoefs(c.NumCoefs(),c.coefs)
 	{
@@ -35,6 +36,7 @@ template<typename TModel>
 class CSplinePSF : public PSFImpl<TModel, CSpline_Calibration>
 {
 public:
+	typedef PSFImpl<TModel, CSpline_Calibration> base;
 	std::vector<float> splineCoefs;
 	CSpline_Calibration calib;
 
@@ -44,7 +46,7 @@ public:
 	}
 
 	CSplinePSF(Int2 roisize, const CSpline_Calibration& c, std::vector<ParamLimit> limits, int numconst) :
-		PSFImpl(roisize, limits, numconst), calib(c), splineCoefs(c.coefs,c.coefs+c.NumCoefs())
+		base(roisize, limits, numconst), calib(c), splineCoefs(c.coefs,c.coefs+c.NumCoefs())
 	{
 		calib.coefs = splineCoefs.data();
 	}

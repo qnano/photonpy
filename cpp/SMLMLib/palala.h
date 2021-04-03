@@ -22,6 +22,8 @@ Example:
 	}, dst_data, src_data);
 */
 #pragma once
+#ifndef PALALA_HEADER_INC
+#define PALALA_HEADER_INC
 
 #include <cassert>
 #include <future>
@@ -29,6 +31,8 @@ Example:
 #ifdef __CUDACC__
 #define PALALA_CUDA
 #endif
+
+#include "StringUtils.h"
 
 #ifdef PALALA_CUDA
 #include <cuda_runtime.h>
@@ -56,10 +60,8 @@ struct param_array : array_with_debugname {
 	size_t size;
 	bool isOutputArray = false; // TODO: Make this templated
 	param_array(T* d=0, size_t s=0) : data(d), size(s) {}
-	PLL_DEVHOST operator T* () { return data; }
-	PLL_DEVHOST operator const T* () const { return data; }
-	PLL_DEVHOST T& operator[](int i) { return data[i]; }
-	PLL_DEVHOST const T& operator[](int i) const { return data[i]; }
+	PLL_DEVHOST operator T* () const { return data; }
+	PLL_DEVHOST T& operator[](int i) const { return data[i]; }
 };
 
 
@@ -168,33 +170,22 @@ struct const_device_param_buf {
 	const_param_array<T> kernelParam() const { return const_param_array<T>(d_data.ptr(), d_data.size()); }
 };
 #endif
-
 template<typename T>
 struct host_param_buf {
 	T* h_data;
 	size_t size;
 
-	host_param_buf(const host_param_buf& o) : h_data(o.h_data) {
-#ifdef PALALA_DEBUG
-		DebugPrintf("host_param_buf &&\n");
-#endif
-	}
+	host_param_buf(const host_param_buf& o) : h_data(o.h_data), size(o.size) {}
 	host_param_buf(const param_array<T>& v) : h_data(v.data), size(v.size) {}
-
 	host_param_buf(std::vector<T>& v) {
-#ifdef PALALA_DEBUG
-		DebugPrintf("host_param_buf copy constructor..\n");
-#endif
 		h_data = &v[0];
 		size = v.size();
-	}
+}
 
-	~host_param_buf() {
-#ifdef PALALA_DEBUG
-		DebugPrintf("~host_param_buf: Init=%d\n", Init);
-#endif
-	}
-	param_array<T> asParamArray() { return param_array<T>(h_data, size); }
+	~host_param_buf() {}
+	param_array<T> asParamArray() const { return param_array<T>(h_data, size); }
+
+	operator T*() const{ return h_data; }
 };
 
 template<typename T>
@@ -202,74 +193,57 @@ struct const_host_param_buf {
 	const T* h_data;
 	size_t size;
 
-	const_host_param_buf(const const_host_param_buf& o) : h_data(o.h_data), size(o.size) {
-#ifdef PALALA_DEBUG
-		DebugPrintf("const_host_param_buf &\n");
-#endif
-	}
+	const_host_param_buf(const const_host_param_buf& o) : h_data(o.h_data), size(o.size) {}
 
 	const_host_param_buf(const_host_param_buf&& o) : h_data(o.h_data), size(o.size) {
-#ifdef PALALA_DEBUG
-		DebugPrintf("const_host_param_buf &&\n");
-#endif
 		o.h_data = 0;
 		o.size = 0;
-	}
+}
 
-	const_host_param_buf(const std::vector<T>& v) : h_data(&v[0]), size(v.size()) {
-#ifdef PALALA_DEBUG
-		DebugPrintf("const_host_param_buf  copy constructor..\n");
-#endif
-	}
+	const_host_param_buf(const std::vector<T>& v) : h_data(&v[0]), size(v.size()) {}
+	const_host_param_buf(const const_param_array<T>& a) : h_data(a.data), size(a.size) {}
+	~const_host_param_buf() {}
+	const_param_array<T> asParamArray() const { return const_param_array<T>(h_data, size); }
 
-	const_host_param_buf(const const_param_array<T>& a) : h_data(a.data), size(a.size) {
-#ifdef PALALA_DEBUG
-		DebugPrintf("const_host_param_buf  copy constructor..\n");
-#endif
-	}
-
-	~const_host_param_buf() {
-#ifdef PALALA_DEBUG
-		DebugPrintf("~const_host_param_buf : Init=%d\n", Init);
-#endif
-	}
-	const_param_array<T> asParamArray() { return const_param_array<T>(h_data, size); }
+	operator const T* () const { return h_data; }
 };
 
 
-template<typename T>
-typename param_array<T> _make_array(T* ptr, size_t size, const char *dbgname) { 
-	auto r = param_array<T>(ptr, size); 
-	r.setDebugName(dbgname);
-	return r;
-}
 
-template<typename T>
-typename const_param_array<T> _make_array(const T* ptr, size_t size, const char *dbgname) { 
-	auto r = const_param_array<T>(ptr, size);
-	r.setDebugName(dbgname);
-	return r;
-}
 
-template<typename T>
-typename const_param_array<T> _const_array(const T* ptr, size_t size, const char *dbgname) { 
-	auto r = const_param_array<T>(ptr, size); 
-	r.setDebugName(dbgname);
-	return r;
-}
+	template<typename T>
+	typename param_array<T> _make_array(T* ptr, size_t size, const char *dbgname) { 
+		auto r = param_array<T>(ptr, size); 
+		r.setDebugName(dbgname);
+		return r;
+	}
 
-template<typename T>
-typename param_array<T> _out_array(T* ptr, size_t size, const char *dbgname) {
-	auto r = param_array<T>(ptr, size); 
-	r.isOutputArray = true;
-	r.setDebugName(dbgname);
-	return r;
-}
+	template<typename T>
+	typename const_param_array<T> _make_array(const T* ptr, size_t size, const char *dbgname) { 
+		auto r = const_param_array<T>(ptr, size);
+		r.setDebugName(dbgname);
+		return r;
+	}
 
-#define make_array(_Ptr, _Size) _make_array(_Ptr, _Size, #_Ptr)
-#define const_array(_Ptr, _Size) _const_array(_Ptr, _Size, #_Ptr)
-#define out_array(_Ptr, _Size) _out_array(_Ptr, _Size, #_Ptr)
-#define const_vector(_Vec) _const_array((_Vec).data(), (_Vec).size(), #_Vec)
+	template<typename T>
+	typename const_param_array<T> _const_array(const T* ptr, size_t size, const char *dbgname) { 
+		auto r = const_param_array<T>(ptr, size); 
+		r.setDebugName(dbgname);
+		return r;
+	}
+
+	template<typename T>
+	typename param_array<T> _out_array(T* ptr, size_t size, const char *dbgname) {
+		auto r = param_array<T>(ptr, size); 
+		r.isOutputArray = true;
+		r.setDebugName(dbgname);
+		return r;
+	}
+
+	#define make_array(_Ptr, _Size) _make_array(_Ptr, _Size, #_Ptr)
+	#define const_array(_Ptr, _Size) _const_array(_Ptr, _Size, #_Ptr)
+	#define out_array(_Ptr, _Size) _out_array(_Ptr, _Size, #_Ptr)
+	#define const_vector(_Vec) _const_array((_Vec).data(), (_Vec).size(), #_Vec)
 
 // Default
 template<bool cuda, typename T>
@@ -353,13 +327,13 @@ struct get_param_arg<false, const_param_array<T> >
 template<typename T>
 struct pass_to_kernel<host_param_buf<T>> {
 	typedef param_array<T> type;
-	static param_array<T> pass(host_param_buf<T>& v) { return v.asParamArray();}
+	static param_array<T> pass(const host_param_buf<T>& v) { return v.asParamArray();}
 };
 
 template<typename T>
 struct pass_to_kernel<const_host_param_buf<T>> {
 	typedef const_param_array<T> type;
-	static const_param_array<T> pass(const_host_param_buf<T>& v) { return v.asParamArray(); }
+	static const_param_array<T> pass(const const_host_param_buf<T>& v) { return v.asParamArray(); }
 };
 template<typename T>
 typename pass_to_kernel<T>::type pala_pass_to_kernel(T& v) {
@@ -381,7 +355,7 @@ auto convert_arg(const T& v) -> typename get_param_arg<false, const T>::type {
 }
 
 template<typename Function, typename Tuple, std::size_t ...I>
-void call_func(int nx, bool singleThread, Function f, Tuple& t, std::index_sequence<I...>)
+void call_func(int nx, bool singleThread, Function f, const Tuple& t, std::index_sequence<I...>)
 {
 	if (singleThread) {
 		for (int i = 0; i < nx; i++)
@@ -419,24 +393,24 @@ void call_func(int nx, int ny, bool singleThread, Function f, Tuple& t, std::ind
 }
 
 template<typename Function, typename... Args>
-void parallel_for_cpu(int nx, Function f, Args&... args) {
-	call_func(nx, false, f, std::make_tuple(convert_arg(args)...), std::index_sequence_for<Args...>{});
+void palala_for_cpu(int nx, Function f, Args&&... args) {
+	call_func(nx, false, f, std::make_tuple(convert_arg(std::forward<Args>(args))...), std::index_sequence_for<Args...>{});
 }
 
 template<typename Function, typename... Args>
-void singlethread_for(int nx, Function f, Args&... args) {
-	call_func(nx, true, f, std::make_tuple(convert_arg(args)...), std::index_sequence_for<Args...>{});
+void singlethread_for(int nx, Function f, Args&&... args) {
+	call_func(nx, true, f, std::make_tuple(convert_arg(std::forward<Args>(args))...), std::index_sequence_for<Args...>{});
 }
 
 
 template<typename Function, typename... Args>
-void parallel_for_cpu(int nx, int ny, Function f, Args&... args) {
-	call_func(nx, ny, false, f, std::make_tuple(convert_arg(args)...), std::index_sequence_for<Args...>{});
+void palala_for_cpu(int nx, int ny, Function f, Args&&... args) {
+	call_func(nx, ny, false, f, std::make_tuple(convert_arg(std::forward<Args>(args))...), std::index_sequence_for<Args...>{});
 }
 
 template<typename Function, typename... Args>
-void singlethread_for(int nx, int ny, Function f, Args&... args) {
-	call_func(nx, ny, true, f, std::make_tuple(convert_arg(args)...), std::index_sequence_for<Args...>{});
+void singlethread_for(int nx, int ny, Function f, Args&&... args) {
+	call_func(nx, ny, true, f, std::make_tuple(convert_arg(std::forward<Args>(args))...), std::index_sequence_for<Args...>{});
 }
 
 #ifdef PALALA_CUDA
@@ -485,53 +459,43 @@ auto cuda_convert_arg(const T& v) -> typename get_param_arg<true, const T>::type
 	return get_param_arg<true, const T&>::type(v);
 }
 
-template<typename Function, typename... Args>
-void parallel_for_cuda(int nx, Function f, Args&... args) {
-	auto argtuple = std::make_tuple(cuda_convert_arg(args)...);
-	call_kernel(nx, f, argtuple, std::index_sequence_for<Args...>{});
-}
-template<typename Function, typename... Args>
-void parallel_for_cuda(int nx, int ny, Function f, Args&... args) {
-	auto argtuple = std::make_tuple(cuda_convert_arg(args)...);
-	call_kernel(nx, ny, f, argtuple, std::index_sequence_for<Args...>{});
-}
 #endif
 
 
 template <typename Function, typename... Args>
-void palala_for(int nx, bool useCuda, Function f, Args&... args)
+void palala_for(int nx, bool useCuda, Function f, Args&&... args)
 {
 #ifdef PALALA_CUDA
 	if (useCuda)
-		parallel_for_cuda(nx, f, args...);
+		palala_for_cpu(nx, f, std::forward<Args>(args)...);
 	else {
 #ifdef _DEBUG
-		singlethread_for(nx, f, args...);
+		singlethread_for(nx, f, std::forward<Args>(args)...);
 #else
-		parallel_for_cpu(nx, f, args...);
+		palala_for_cpu(nx, f, std::forward<Args>(args)...);
 #endif
 	}
 #else
-	parallel_for_cpu(nx, f, args...);
+	palala_for_cpu(nx, f, std::forward<Args>(args)...);
 #endif
 }
 
 
 template <typename Function, typename... Args>
-void palala_for(int nx, int ny, bool useCuda, Function f, Args&... args)
+void palala_for(int nx, int ny, bool useCuda, Function f, Args&&... args)
 {
 #ifdef PALALA_CUDA
 	if (useCuda)
-		parallel_for_cuda(nx, ny, f, args...);
+		palala_for_cpu(nx, ny, f, std::forward<Args>(args)...);
 	else {
 #ifdef _DEBUG
-		singlethread_for(nx, ny, f, args...);
+		singlethread_for(nx, ny, f, std::forward<Args>(args)...);
 #else
-		parallel_for_cpu(nx, ny, f, args...);
+		palala_for_cpu(nx, ny, f, std::forward<Args>(args)...);
 #endif
 	}
 #else
-	parallel_for_cpu(nx, f, args...);
+	palala_for_cpu(nx, f, std::forward<Args>(args)...);
 #endif
 }
 
@@ -541,3 +505,4 @@ void palala_for(int nx, int ny, bool useCuda, Function f, Args&... args)
 #define PALALA [=]
 #endif
 
+#endif
