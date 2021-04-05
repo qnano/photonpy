@@ -56,7 +56,7 @@ CDLL_EXPORT void SIMFLUX_ProjectPointData(const Vector3f *xyI, int numpts, int p
 
 CDLL_EXPORT void SIMFLUX_DFT2D_Points(const Vector3f* xyI, int numpts, const Vector2f* k, int numk, Vector2f* output, bool useCuda)
 {
-	palala_for(numk, useCuda, PALALA(int i, const Vector3f* xyI, const Vector2f* k, Vector2f* output) {
+	palala_for(numk, useCuda, PLL_FN(int i, const Vector3f* xyI, const Vector2f* k, Vector2f* output) {
 		Vector2f k_ = k[i];
 
 		// Use Kahan Sum for reduced errors

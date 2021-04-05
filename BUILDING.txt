@@ -5,7 +5,7 @@ BUILDING
 (The order is important here)
 - Install Visual studio 2019 Community Edition: https://visualstudio.microsoft.com/downloads/
 - Open visual studio. Menu "Tools / Get Tools and Features"
-- Install CUDA Toolkit 10.1 update 2 https://developer.nvidia.com/cuda-downloads
+- Install CUDA Toolkit 11.2 https://developer.nvidia.com/cuda-downloads
 	(This needs to be done after visual studio install, so CUDA is registered into Visual Studio)
 
 - Download the external libraries below and extract in the root. There should be a folder "external" in the repository "cpp" directory.

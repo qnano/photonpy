@@ -219,7 +219,7 @@ CDLL_EXPORT void Gauss2D_EstimateIntensityBg(const float* imageData, Vector2f *I
 	std::vector<float> psf_space(imgw*imgw*numspots);
 
 	palala_for(numspots, cuda, 
-		PALALA(int i, float* psf_space, const Int2* roipos, const float* imageData, Vector2f *IBg, Vector2f* IBg_crlb, const Vector2f* xy, const float* sigma) {
+		PLL_FN(int i, float* psf_space, const Int2* roipos, const float* imageData, Vector2f *IBg, Vector2f* IBg_crlb, const Vector2f* xy, const float* sigma) {
 		const float* spot_img = &imageData[imgw*imgw*i];
 
 		float *psf = &psf_space[imgw*imgw*i];

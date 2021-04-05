@@ -74,7 +74,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
-      <AdditionalOptions>--expt-extended-lambda --expt-relaxed-constexpr %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Wno-deprecated-gpu-targets --expt-extended-lambda --expt-relaxed-constexpr --default-stream per-thread %(AdditionalOptions)</AdditionalOptions>
       <Include>
       </Include>
       <CodeGeneration>compute_60,sm_60</CodeGeneration>

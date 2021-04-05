@@ -14,7 +14,7 @@ Features include:
 * Drift correction in 2D and 3D
 * 3D Localization using [cubic spline PSFs](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6009849/)
 
-Currently compiled for CUDA 10.1 update 2 / Windows x64 using Visual Studio 2019
+Currently compiled for CUDA 11.2 / Windows x64 using Visual Studio 2019
 
 Credits to Willem Melching (@pd0wm) for general debugging and implementation of astigmatic Gaussian PSF models, as well as yet unpublished code.
 

@@ -439,7 +439,7 @@ public:
 	
 		float* d_sums = db->summed.data();
 
-		LaunchKernel(numspots, PALALA(int i) {
+		LaunchKernel(numspots, PLL_FN(int i) {
 			Gauss2D_Model_XYIBg model({ roisize,roisize }, sigma);
 
 			const float* smp = &d_sample[i*smpcount];
